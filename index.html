@@ -1,0 +1,85 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="wxapp.css">
+</head>
+
+<body class="phone-bg">
+	<table>
+		<tr>
+			<td><input value="输入文本" id="inputtext" />
+				<button id="generate-btn" onclick="">生成</button>
+				<button id="download-btn">下载</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="wechat-content-container">
+					<div class="wechat-content" id="capture-area" style="background-color:#F1F1F1;">
+						<div class="wechat-dialog">
+							<div class="wechat-dialog-face"><img src="yjd_pro.jpg"></div>
+							<table>
+								<tr>
+									<td>
+										<div class="wechat-username">杨佳鼎</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="wechat-dialog-text" id="text">我是花心大萝卜</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				预览：
+				<img alt="预览" id="preview">
+			</td>
+		</tr>
+	</table>
+	<style>
+		.wechat-content {
+			margin-top: 50px;
+			margin-bottom: 30px;
+			padding: 50px;
+			padding-bottom: 30px;
+		}
+
+		.wechat-content-container {
+			box-shadow: 5px 5px 5px #00000055;
+		}
+
+		#preview {
+			width: 70%;
+			display: block;
+		}
+	</style>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+	<script>
+		// generate img
+		document.getElementById('generate-btn').addEventListener('click', function () {
+			document.getElementById('text').innerHTML = document.getElementById('inputtext').value;
+			html2canvas(document.getElementById('capture-area')).then(function (canvas) {
+				document.getElementById('preview').src = canvas.toDataURL('image/png');
+			});
+		});
+
+		// capture, transform to image and download-btn
+		document.getElementById('download-btn').addEventListener('click', function () {
+			html2canvas(document.getElementById('capture-area')).then(function (canvas) {
+				let link = document.createElement('a');
+				link.href = canvas.toDataURL('image/png');
+				link.download = 'fake-wechat.png';
+				link.click();
+			});
+		});
+	</script>
+</body>
+
+</html>
